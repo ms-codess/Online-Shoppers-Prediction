@@ -9,6 +9,11 @@ The dataset is from [Kaggle](https://www.kaggle.com/datasets/imakash3011/online-
 - Operating System, Browser, and Region
 - Traffic type & weekend behavior
 - Revenue (Target Variable: 1 = Buy, 0 = Not Buy)
+
+
+
+
+
 1️⃣ Data Preprocessing & Exploration  
 - Load dataset and check for missing values, duplicates, and data types.  
 - Visualize distributions (histograms, box plots, correlation matrix).  

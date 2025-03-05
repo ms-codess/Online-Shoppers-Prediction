@@ -3,7 +3,7 @@ This project aims to predict whether an online shopper will buy or not based on 
 
 
 Dataset  
-The dataset contains is from [Kaggle](https://www.kaggle.com/datasets/imakash3011/online-shoppers-purchasing-intention-dataset/data) . It has various user session attributes, such as:
+The dataset is from [Kaggle](https://www.kaggle.com/datasets/imakash3011/online-shoppers-purchasing-intention-dataset/data) . It has various user session attributes, such as:
 - Page visit durations
 - Bounce rates & exit rates
 - Operating System, Browser, and Region

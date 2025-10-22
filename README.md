@@ -39,3 +39,35 @@ The dataset is from [Kaggle](https://www.kaggle.com/datasets/imakash3011/online-
 - The hyperparameter-tuned model performed the best, balancing bias and variance while improving overall accuracy.  
 - This model is now optimized for predicting user purchase behavior.
 
+
+## Interactive Dashboard
+
+An interactive dashboard is included to train, test, and visualize model performance on the Online Shoppers dataset.
+
+Quick start:
+
+1. Create and activate a virtual environment (optional)
+   - Windows (PowerShell):
+     - `python -m venv .venv`
+     - `.\\.venv\\Scripts\\Activate.ps1`
+   - macOS/Linux:
+     - `python3 -m venv .venv`
+     - `source .venv/bin/activate`
+
+2. Install dependencies
+   - `pip install -r requirements.txt`
+
+3. (Optional) Prepare cleaned CSV like the notebook
+   - `python tools/prepare_cleaned_csv.py --input online_shoppers_intention.csv --output online_shoppers_intention_cleaned.csv`
+   - The dashboard will auto-use `online_shoppers_intention_cleaned.csv` if present; otherwise it applies the same preprocessing in-app.
+
+4. Launch the dashboard
+   - `streamlit run dashboard/app.py`
+
+What you can do:
+- Use a clean, user-friendly Predict tab with simple fields and tooltips.
+- Choose a model (Logistic Regression or Random Forest) and train with a configurable split.
+- View metrics (Accuracy, Precision, Recall, F1, ROC AUC), confusion matrix, ROC and PR curves.
+- Inspect feature importance (tree-based or coefficients for logistic regression).
+- See notebook-style visuals (class balance, correlation, distributions) with explanations.
+

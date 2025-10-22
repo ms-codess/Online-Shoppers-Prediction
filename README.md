@@ -1,73 +1,140 @@
-# Online-Shoppers-Prediction
-This project aims to predict whether an online shopper will buy or not based on their browsing behavior. We use machine learning models, including Logistic Regression, Random Forest, and a Hyperparameter-Tuned Random Forest to optimize prediction accuracy. 
+# 🛍️ Online Shoppers Intention — Interactive Dashboard
+
+This project predicts **whether an online shopper will make a purchase** based on their browsing behavior.  
+We leverage **Logistic Regression**, **Random Forest**, and a **Hyperparameter-Tuned Random Forest** model to achieve high accuracy and balanced performance.
+
+🔗 **Live Demo:** [Streamlit App](https://online-shoppers-prediction.streamlit.app/)
+
+📊 **Dataset:** [Kaggle – Online Shoppers Purchasing Intention](https://www.kaggle.com/datasets/imakash3011/online-shoppers-purchasing-intention-dataset/data)
+
+---
+
+## 🧾 Dataset Overview
+
+The dataset contains session-level attributes including:
+
+- 🕒 Page visit durations  
+- 🚪 Bounce rates & exit rates  
+- 🖥️ OS, browser, and region  
+- 🌐 Traffic type & weekend behavior  
+- 💰 **Target Variable:** `Revenue` (1 = Buy, 0 = Not Buy)
+
+---
+
+## 📈 App Preview
+
+| Home Page | Prediction Interface |
+|-----------|----------------------|
+| ![Home Page](assets/home.png) | ![Prediction](assets/predict.png) |
+
+---
+
+##  Data Preprocessing & Exploration
+
+- Checked for missing values, duplicates, and data types.  
+- Visualized data with histograms, box plots, and a correlation matrix.  
+- Encoded categorical features & scaled numerical values.  
+- Split dataset into training and test sets (80/20).
+
+```python
+import pandas as pd
+
+df = pd.read_csv("online_shoppers_intention.csv")
+df.info()
+df.describe()
+df.isnull().sum()
+```
+
+---
+
+##  Baseline Model — Random Forest
+
+- Trained a default Random Forest Classifier.  
+- Evaluated model performance using accuracy, precision, recall, and F1-score.
+
+```python
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import classification_report
+
+model = RandomForestClassifier(random_state=42)
+model.fit(X_train, y_train)
+y_pred = model.predict(X_test)
+print(classification_report(y_test, y_pred))
+```
+
+---
+
+##  Hyperparameter Tuning — GridSearchCV
+
+We optimized the Random Forest model to improve performance and reduce overfitting.
+
+```python
+from sklearn.model_selection import GridSearchCV
+
+param_grid = {
+    "n_estimators": [100, 200, 300],
+    "max_depth": [None, 10, 20],
+    "min_samples_split": [2, 5, 10],
+    "min_samples_leaf": [1, 2, 4]
+}
+
+grid_search = GridSearchCV(
+    estimator=RandomForestClassifier(random_state=42),
+    param_grid=param_grid,
+    cv=5,
+    n_jobs=-1,
+    verbose=2
+)
+
+grid_search.fit(X_train, y_train)
+best_model = grid_search.best_estimator_
+```
 
 
-Dataset  
-The dataset is from [Kaggle](https://www.kaggle.com/datasets/imakash3011/online-shoppers-purchasing-intention-dataset/data) . It has various user session attributes, such as:
-- Page visit durations
-- Bounce rates & exit rates
-- Operating System, Browser, and Region
-- Traffic type & weekend behavior
-- Revenue (Target Variable: 1 = Buy, 0 = Not Buy)
 
+##  Interactive Dashboard (Streamlit)
 
+The dashboard allows users to:
 
+- 📥 Upload a dataset  
+- ⚙️ Train & test different models  
+- 📊 Visualize performance metrics  
+- 🧮 Make predictions for new data in real time  
 
+```bash
+# Clone repo
+git clone https://github.com/your-username/online-shoppers-prediction.git
+cd online-shoppers-prediction
 
-1️⃣ Data Preprocessing & Exploration  
-- Load dataset and check for missing values, duplicates, and data types.  
-- Visualize distributions (histograms, box plots, correlation matrix).  
-- Clean & preprocess data:  
+# Optional: create virtual env
+python -m venv .venv
+source .venv/bin/activate   # or .\.venv\Scripts\Activate.ps1 on Windows
 
-2️⃣ Baseline Model - Random Forest  
-- Train a default Random Forest classifier.  
-- Evaluate model performance using accuracy, precision, recall, and F1-score.  
+# Install dependencies
+pip install -r requirements.txt
 
-3️⃣ Hyperparameter Tuning - GridSearchCV  
-- Optimize Random Forest parameters for better performance:
-  - n_estimators: [100, 200, 300]  
-  - max_depth: [None, 10, 20]  
-  - min_samples_split: [2, 5, 10]  
-  - min_samples_leaf: [1, 2, 4]  
-- GridSearchCV performs an exhaustive search over all parameter combinations.  
-- The best combination is selected based on cross-validation performance.  
+# Run the app
+streamlit run dashboard/app.py
+```
 
-4️⃣ Model Comparison & Final Prediction  
-- Compare Baseline vs. Tuned Random Forest performance.  
-- Make a final prediction: Will the user buy or not?  
+---
 
-- The hyperparameter-tuned model performed the best, balancing bias and variance while improving overall accuracy.  
-- This model is now optimized for predicting user purchase behavior.
+## 📂 Project Structure
 
-
-## Interactive Dashboard
-
-An interactive dashboard is included to train, test, and visualize model performance on the Online Shoppers dataset.
-
-Quick start:
-
-1. Create and activate a virtual environment (optional)
-   - Windows (PowerShell):
-     - `python -m venv .venv`
-     - `.\\.venv\\Scripts\\Activate.ps1`
-   - macOS/Linux:
-     - `python3 -m venv .venv`
-     - `source .venv/bin/activate`
-
-2. Install dependencies
-   - `pip install -r requirements.txt`
-
-3. (Optional) Prepare cleaned CSV like the notebook
-   - `python tools/prepare_cleaned_csv.py --input online_shoppers_intention.csv --output online_shoppers_intention_cleaned.csv`
-   - The dashboard will auto-use `online_shoppers_intention_cleaned.csv` if present; otherwise it applies the same preprocessing in-app.
-
-4. Launch the dashboard
-   - `streamlit run dashboard/app.py`
-
-What you can do:
-- Use a clean, user-friendly Predict tab with simple fields and tooltips.
-- Choose a model (Logistic Regression or Random Forest) and train with a configurable split.
-- View metrics (Accuracy, Precision, Recall, F1, ROC AUC), confusion matrix, ROC and PR curves.
-- Inspect feature importance (tree-based or coefficients for logistic regression).
-- See notebook-style visuals (class balance, correlation, distributions) with explanations.
+```
+.
+├── dashboard/
+│   ├── app.py
+│   ├── components/
+│   ├── utils/
+├── notebooks/
+│   └── EDA_and_Modeling.ipynb
+├── data/
+│   └── online_shoppers_intention.csv
+├── assets/
+│   ├── home.png
+│   └── predict.png
+├── requirements.txt
+└── README.md
+```
 

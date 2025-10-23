@@ -25,7 +25,7 @@ The dataset contains session-level attributes including:
 
 | Home Page | Prediction Interface |
 |-----------|----------------------|
-| ![Home Page](assets/home.png) | ![Prediction](assets/predict.png) |
+| ![Home Page](/home.png) | ![Prediction](/predict.png) |
 
 ---
 
